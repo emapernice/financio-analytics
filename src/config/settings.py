@@ -1,9 +1,9 @@
 import os
-from pathlib import Path
 from dotenv import load_dotenv
+from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
-ENV_PATH = BASE_DIR / "config" / ".env"
+BASE_DIR = Path(__file__).resolve().parents[2]
+ENV_PATH = BASE_DIR / ".env"
 
 load_dotenv(ENV_PATH)
 
