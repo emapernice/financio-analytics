@@ -3,26 +3,20 @@ from src.etl.extract.records_extractor import RecordsExtractor
 from src.etl.transform.monthly_transformer import MonthlyIncomeExpenseTransformer
 from src.etl.load.monthly_loader import MonthlyIncomeExpenseLoader
 
-def run_monthly_income_expense_etl():
-    """
-    Full ETL pipeline:
-    1. Extract records from DB
-    2. Transform them into monthly summary
-    3. Load results into a CSV file
-    """
+def run_monthly_income_expense_etl(user_id: int):
+
     db = SessionLocal()
 
     try:
         print("Extracting records...")
-        records = RecordsExtractor.get_all_records(db)
+        records = RecordsExtractor.get_records_by_user(db, user_id=1)
 
         print("Transforming...")
         df = MonthlyIncomeExpenseTransformer.transform(records)
 
-        print("Preview (primeras filas):")
         print(df.head())
 
-        print("Saving to CSV file...")
+        print("Saving to CSV...")
         output_path = MonthlyIncomeExpenseLoader.save_to_csv(df)
 
         print(f"ETL completed successfully. File saved at: {output_path}")
@@ -32,4 +26,4 @@ def run_monthly_income_expense_etl():
 
 
 if __name__ == "__main__":
-    run_monthly_income_expense_etl()
+    run_monthly_income_expense_etl(user_id=1)

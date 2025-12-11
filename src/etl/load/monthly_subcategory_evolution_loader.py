@@ -2,7 +2,7 @@ import os
 import pandas as pd
 from datetime import datetime
 
-class MonthlyIncomeExpenseLoader:
+class MonthlySubcategoryEvolutionLoader:
 
     @staticmethod
     def save_to_csv(df, output_dir="data/analytics"):
@@ -10,7 +10,7 @@ class MonthlyIncomeExpenseLoader:
         os.makedirs(output_dir, exist_ok=True)
 
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        filename = f"analytics_monthly_{timestamp}.csv"
+        filename = f"analytics_monthly_subcategories_{timestamp}.csv"
         path = os.path.join(output_dir, filename)
 
         df.to_csv(path, index=False)

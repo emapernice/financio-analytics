@@ -22,13 +22,10 @@ class MonthlyIncomeExpenseTransformer:
 
         df = pd.DataFrame(data)
 
-        # EXCLUDE unwanted subcategories
         df = df[~df["subcategory_id"].isin(MonthlyIncomeExpenseTransformer.EXCLUDED_SUBCATEGORIES)]
 
-        # Convertir fechas a datetime
         df["date"] = pd.to_datetime(df["date"], errors="coerce")
 
-        # Remover filas con fecha inválida
         df = df.dropna(subset=["date"])
 
         df["year"] = df["date"].dt.year
