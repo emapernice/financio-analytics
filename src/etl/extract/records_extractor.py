@@ -9,7 +9,7 @@ class RecordsExtractor:
     def get_records_by_user(db: Session, user_id: int):
         """
         Retrieves all records that belong to any account of the specified user,
-        filtered by currency = 1.
+        filtered by currency_id = 1.
         """
 
         account_ids = (
@@ -26,7 +26,9 @@ class RecordsExtractor:
         return (
             db.query(Record)
             .options(joinedload(Record.subcategory))
-            .filter(Record.account_id.in_(account_ids))
-            .filter(Record.currency_id == 1)
+            .filter(
+                Record.account_id.in_(account_ids),
+                Record.currency_id == 1
+            )
             .all()
         )
